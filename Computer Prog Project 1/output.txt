@@ -1,0 +1,20 @@
+Name		GWA		Grade Letter
+Estrada		90.00		B
+Hardy		77.50		C
+Arjona		89.25		B
+Lesnar		77.75		C
+Tendero		80.75		C
+Castro		84.25		B
+Lapig		85.00		B
+Yabut		93.75		A
+Oregas		93.00		A
+Antonio		84.00		B
+Juan		73.75		F
+Jaen		87.00		B
+Huab		86.00		B
+Berlon		73.00		F
+Agtrap		73.50		F
+Teflon		95.00		A
+
+Total Passed: 13
+Total Failed: 3
