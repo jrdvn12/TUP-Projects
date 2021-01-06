@@ -35,6 +35,3 @@
 *.un~
 *.cpp~
 *.c~
-
-# Text files
-*.txt
