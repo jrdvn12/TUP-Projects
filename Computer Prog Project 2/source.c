@@ -250,7 +250,37 @@ void deleteStudent() {
 
 void displayStudent() {
 	system("cls");
-	printf("Display Student Screen\n");
+
+	recordptr=fopen("record.txt", "r");
+
+	if(!recordptr) {
+		printf("No existing student record. Go back to MAIN MENU and use the Add Student feature.\n");
+		printf("\nPress ANY key to return to MAIN MENU...");
+		getch();
+		return;
+	}
+
+	char studentNo[50], fname[50], lname[50], searchFname[50], searchLname[50];
+	float grade1=0, grade2=0, grade3=0, grade4=0;
+	printf("Enter Student Name (First and Last Name): ");
+	scanf("%s%s", &searchFname, &searchLname);
+	fflush(stdin);
+
+	while((fscanf(recordptr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
+		if(strcmp(fname, searchFname) == 0 && strcmp(lname, searchLname) == 0) {
+			break;
+		}
+	}
+
+	if(strcmp(fname, searchFname) != 0 && strcmp(lname, searchLname) != 0) {
+		printf("Student does not exist.\n");
+		fclose(recordptr);
+	} else {
+		printf("\nFirst Name: %s\nLast Name: %s\n", fname, lname);
+		printf("Grade 1: %.2f\nGrade 2: %.2f\nGrade 3: %.2f\nGrade 4: %.2f\n", grade1, grade2, grade3, grade4);
+		fclose(recordptr);
+	}
+
 	printf("\nPress ANY key to return to MAIN MENU...");
 	getch();
 }
