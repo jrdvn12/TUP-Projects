@@ -369,7 +369,7 @@ void computeGrade() {
 	getch();
 
 	system("cls");
-	outputPtr=fopen("output.txt", "w");
+	outputPtr=fopen("output1.txt", "w");
 	printf("Name\t\t\tGWA\t\t\tGrade Letter\n");
 	fprintf(outputPtr, "Name\t\t\tGWA\t\t\tGrade Letter\n");
 	while((fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
