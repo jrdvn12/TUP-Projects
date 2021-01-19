@@ -31,7 +31,7 @@
 *.out
 *.app
 
-# Vim undo files
+# Vim files
 *.un~
 *.cpp~
 *.c~
