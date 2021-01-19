@@ -1,0 +1,8 @@
+Student Number		Name			GWA		Remarks
+2021-IS-001		Jared Bruno		87.00		Passed
+2021-IS-002		CJ Hilario		93.00		Passed
+
+Total Students: 2
+Total Passed: 2
+Total Failed: 0
+Total Dropped: 0

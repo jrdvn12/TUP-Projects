@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
+#include <time.h>
 
 FILE *recordPtr, *tempPtr, *droppedPtr, *outputPtr;
 
@@ -339,6 +340,14 @@ int verdict(float gwa) {
 	}
 }
 
+char *verdict2(float gwa) {
+	if(gwa>=75) {
+		return "Passed";
+	} else {
+		return "Failed";
+	}
+}
+
 void loading() {
 	printf("Computing Grades, Please Wait ");
 	for(int i=1; i<=10; i++) {
@@ -391,7 +400,54 @@ void computeGrade() {
 
 void generateGSR() {
 	system("cls");
-	printf("Generate Grade Summary Report\n");
+
+	char studentNo[50], fname[50], lname[50];
+	float grade1=0, grade2=0, grade3=0, grade4=0;
+    int pass=0, fail=0, drop=0, totalStudent=0;
+	recordPtr=fopen("record.txt", "r");
+
+	if(!recordPtr) {
+		printf("No existing student record. Go back to MAIN MENU and use the Add Student feature.\n");
+		printf("\nPress ANY key to return to MAIN MENU...");
+		getch();
+		return;
+	}
+
+	loading();
+	printf("\nPress ANY key to Display...");
+	getch();
+
+	system("cls");
+	outputPtr=fopen("output2.txt", "w");
+	printf("Student Number\t\tName\t\t\tGWA\t\tRemarks\n");
+	fprintf(outputPtr, "Student Number\t\tName\t\t\tGWA\t\tRemarks\n");
+	while((fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
+		printf("%s\t\t%s %s\t\t%.2f\t\t%s\n", studentNo, fname, lname, gwa(grade1,grade2,grade3,grade4), verdict2(gwa(grade1,grade2,grade3,grade4)));
+		fprintf(outputPtr, "%s\t\t%s %s\t\t%.2f\t\t%s\n", studentNo, fname, lname, gwa(grade1,grade2,grade3,grade4), verdict2(gwa(grade1,grade2,grade3,grade4)));
+		verdict(gwa(grade1,grade2,grade3,grade4))?pass++:fail++;
+		totalStudent++;
+	}
+
+	droppedPtr=fopen("dropped.txt", "r");
+	char c;
+	for(c=getc(droppedPtr); c!=EOF; c=getc(droppedPtr)) {
+		if(c=='\n') {
+			drop++;
+		}
+	}
+
+	printf("\nTotal Students: %d\n", totalStudent);
+	printf("Total Passed: %d\n", pass);
+	printf("Total Failed: %d\n", fail);
+	printf("Total Dropped: %d\n", drop);
+	fprintf(outputPtr, "\nTotal Students: %d\n", totalStudent);
+	fprintf(outputPtr, "Total Passed: %d\n", pass);
+	fprintf(outputPtr, "Total Failed: %d\n", fail);
+	fprintf(outputPtr, "Total Dropped: %d", drop);
+	fclose(recordPtr);
+	fclose(outputPtr);
+	fclose(droppedPtr);
+
 	printf("\nPress ANY key to return to MAIN MENU...");
 	getch();
 }

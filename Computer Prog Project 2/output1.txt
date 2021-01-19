@@ -1,7 +1,6 @@
 Name			GWA			Grade Letter
 Jared Bruno		87.00			     B
 CJ Hilario		93.00			     A
-Galileo Galilei		90.00			     B
 
-Total Passed: 3
+Total Passed: 2
 Total Failed: 0
