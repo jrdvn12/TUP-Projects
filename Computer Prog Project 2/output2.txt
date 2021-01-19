@@ -1,17 +1,14 @@
 		Technological University of the Philippines
 			SUMMARY OF GRADES
 
-Subject Code: CC131					Time: 07:00:27 pm
+Subject Code: CC131					Time: 07:11:28 pm
 Subject Description: Computer Programming 1		Room: Online
 Semester: 1	SY: 2020-2021
 
 Student Number		Name			GWA		Remarks
-2021-IS-001		Jared Bruno		87.00		Passed
-2021-IS-002		CJ Hilario		93.00		Passed
-2021-IS-003		Kendrick Lamar		80.25		Passed
-2021-IS-004		Drake Ramoray		92.50		Passed
+2021-IS-001		Isaac Newton		88.75		Passed
 
-Total Students: 4					Date: 01/19/2021
-Total Passed: 4
+Total Students: 1					Date: 01/19/2021
+Total Passed: 1
 Total Failed: 0
-Total Dropped: 2
+Total Dropped: 1

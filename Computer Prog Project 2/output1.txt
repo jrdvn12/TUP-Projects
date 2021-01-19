@@ -1,8 +1,5 @@
 Name			GWA			Grade Letter
-Jared Bruno		87.00			     B
-CJ Hilario		93.00			     A
-Kendrick Lamar		80.25			     C
-Drake Ramoray		92.50			     A
+Isaac Newton		88.75			     B
 
-Total Passed: 4
+Total Passed: 1
 Total Failed: 0
