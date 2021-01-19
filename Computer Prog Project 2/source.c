@@ -370,11 +370,11 @@ void computeGrade() {
 
 	system("cls");
 	outputPtr=fopen("output.txt", "w");
-	printf("Name\t\t\t\tGWA\t\t\t\tGrade Letter\n");
-	fprintf(outputPtr, "Name\t\t\t\tGWA\t\t\tGrade Letter\n");
+	printf("Name\t\t\tGWA\t\t\tGrade Letter\n");
+	fprintf(outputPtr, "Name\t\t\tGWA\t\t\tGrade Letter\n");
 	while((fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
-		printf("%s %s\t\t\t%.2f\t\t\t     %c\n", fname, lname, gwa(grade1,grade2,grade3,grade4), grade(gwa(grade1,grade2,grade3,grade4)));
-		fprintf(outputPtr, "%s %s\t\t\t%.2f\t\t\t     %c\n", fname, lname, gwa(grade1,grade2,grade3,grade4), grade(gwa(grade1,grade2,grade3,grade4)));
+		printf("%s %s\t\t%.2f\t\t\t     %c\n", fname, lname, gwa(grade1,grade2,grade3,grade4), grade(gwa(grade1,grade2,grade3,grade4)));
+		fprintf(outputPtr, "%s %s\t\t%.2f\t\t\t     %c\n", fname, lname, gwa(grade1,grade2,grade3,grade4), grade(gwa(grade1,grade2,grade3,grade4)));
 		verdict(gwa(grade1,grade2,grade3,grade4))?pass++:fail++;
 	}
 
