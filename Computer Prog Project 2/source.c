@@ -25,7 +25,7 @@ void addStudent() {
 	fflush(stdin);
 
 	printf("Enter Student Name (First and Last Name): ");
-	fgets(name, 50, stdin);
+	gets(name);
 	fflush(stdin);
 
 	printf("Enter Score 1: ");
