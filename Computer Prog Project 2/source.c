@@ -6,6 +6,14 @@
 
 FILE *recordPtr, *tempPtr, *droppedPtr, *outputPtr;
 
+void loading() {
+	for(int i=1; i<=10; i++) {
+		for(int j=1; j<=100000000; j++) {}
+		printf(".");
+	}
+	printf(" Complete!\n");
+}
+
 void addStudent() {
 	system("cls");
 
@@ -39,7 +47,8 @@ void addStudent() {
 	printf("\nSave this record? (Y/N): ");
 	scanf("%c", &choice);
 	if(choice == 'Y' || choice == 'y') {
-		printf("\tSaving student record...\n");
+		printf("\tSaving student record ");
+		loading();
 		recordPtr = fopen("record.txt", "a");
 		fprintf(recordPtr, "%s %s %.2f %.2f %.2f %.2f\n", studentNo, name, grade1, grade2, grade3, grade4);
 		fclose(recordPtr);
@@ -92,7 +101,8 @@ void editStudent() {
 				scanf("%f", &newGrade);
 				fflush(stdin);
 
-				printf("\tUpdating record...\n");
+				printf("\tUpdating record ");
+				loading();
 				rewind(recordPtr);
 				while(fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
 					if(strcmp(studentNo, searchStudentNo) == 0) {
@@ -114,7 +124,8 @@ void editStudent() {
 				scanf("%f", &newGrade);
 				fflush(stdin);
 
-				printf("\tUpdating record...\n");
+				printf("\tUpdating record ");
+				loading();
 				rewind(recordPtr);
 				while(fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
 					if(strcmp(studentNo, searchStudentNo) == 0) {
@@ -136,7 +147,8 @@ void editStudent() {
 				scanf("%f", &newGrade);
 				fflush(stdin);
 
-				printf("\tUpdating record...\n");
+				printf("\tUpdating record ");
+				loading();
 				rewind(recordPtr);
 				while(fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
 					if(strcmp(studentNo, searchStudentNo) == 0) {
@@ -158,7 +170,8 @@ void editStudent() {
 				scanf("%f", &newGrade);
 				fflush(stdin);
 				
-				printf("\tUpdating record...\n");
+				printf("\tUpdating record ");
+				loading();
 				rewind(recordPtr);
 				while(fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
 					if(strcmp(studentNo, searchStudentNo) == 0) {
@@ -223,7 +236,8 @@ void deleteStudent() {
 		fflush(stdin);
 
 		if(choice == 'Y' || choice == 'y') {
-			printf("\tDeleting this record...\n");
+			printf("\tDeleting this record ");
+			loading();
 			rewind(recordPtr);
 			while(fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
 				if(strcmp(studentNo, searchStudentNo) != 0) {
@@ -298,9 +312,15 @@ void displayAll() {
 		return;
 	}
 
+	printf("Loading records ");
+	loading();
+	printf("\nPress ANY key to display...");
+	getch();
+
 	char studentNo[50], fname[50], lname[50];
 	float grade1=0, grade2=0, grade3=0, grade4=0;
-
+	
+	system("cls");
 	while((fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
 		printf("\nStudent Number: %s\n", studentNo);
 		printf("First Name: %s\nLast Name: %s\n", fname, lname);
@@ -308,6 +328,39 @@ void displayAll() {
 	}
 
 	fclose(recordPtr);
+
+	printf("\nPress ANY key to return to MAIN MENU...");
+	getch();
+}
+
+void displayDrop() {
+	system("cls");
+	
+	droppedPtr=fopen("dropped.txt", "r");
+
+	if(!droppedPtr) {
+		printf("No existing dropped student.\n");
+		printf("\nPress ANY key to return to MAIN MENU...");
+		getch();
+		return;
+	}
+
+	printf("Loading dropped records ");
+	loading();
+	printf("\nPress ANY key to display...");
+	getch();
+
+	char studentNo[50], fname[50], lname[50];
+	float grade1=0, grade2=0, grade3=0, grade4=0;
+	
+	system("cls");
+	while((fscanf(droppedPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
+		printf("\nStudent Number: %s\n", studentNo);
+		printf("First Name: %s\nLast Name: %s\n", fname, lname);
+		printf("Grade 1: %.2f\nGrade 2: %.2f\nGrade 3: %.2f\nGrade 4: %.2f\n", grade1, grade2, grade3, grade4);
+	}
+
+	fclose(droppedPtr);
 
 	printf("\nPress ANY key to return to MAIN MENU...");
 	getch();
@@ -348,14 +401,7 @@ char *verdict2(float gwa) {
 	}
 }
 
-void loading() {
-	printf("Computing Grades, Please Wait ");
-	for(int i=1; i<=10; i++) {
-		for(int j=1; j<=100000000; j++) {}
-		printf(".");
-	}
-	printf(" Complete!\n");
-}
+
 
 void computeGrade() {
 	system("cls");
@@ -372,7 +418,8 @@ void computeGrade() {
 		getch();
 		return;
 	}
-
+	
+	printf("Computing Grade ");
 	loading();
 	printf("\nPress ANY key to Display...");
 	getch();
@@ -404,6 +451,20 @@ void generateGSR() {
 	char studentNo[50], fname[50], lname[50];
 	float grade1=0, grade2=0, grade3=0, grade4=0;
     int pass=0, fail=0, drop=0, totalStudent=0;
+	int hours, minutes, seconds, day, month, year;
+
+	time_t now;
+	time(&now);
+
+	struct tm *local = localtime(&now);
+
+	hours = local->tm_hour;
+	minutes = local->tm_min;
+	seconds = local->tm_sec;
+	day = local->tm_mday;
+	month = local->tm_mon + 1;
+	year = local->tm_year + 1900;
+
 	recordPtr=fopen("record.txt", "r");
 
 	if(!recordPtr) {
@@ -412,15 +473,36 @@ void generateGSR() {
 		getch();
 		return;
 	}
-
+	
+	printf("Generating Grade Summary Report ");
 	loading();
-	printf("\nPress ANY key to Display...");
+	printf("\nPress ANY key to display...");
 	getch();
 
 	system("cls");
 	outputPtr=fopen("output2.txt", "w");
-	printf("Student Number\t\tName\t\t\tGWA\t\tRemarks\n");
-	fprintf(outputPtr, "Student Number\t\tName\t\t\tGWA\t\tRemarks\n");
+	printf("\t\tTechnological University of the Philippines\n");
+	printf("\t\t\tSUMMARY OF GRADES\n");
+	printf("\nSubject Code: CC131");
+	if(hours < 12) {
+		printf("\t\t\t\t\tTime: %02d:%02d:%02d AM\n", hours, minutes, seconds);
+	} else {
+		printf("\t\t\t\t\tTime: %02d:%02d:%02d PM\n", hours - 12, minutes, seconds);
+	}
+	printf("Subject Description: Computer Programming 1\t\tRoom: Online\n");
+	printf("Semester: 1\tSY: 2020-2021\n");
+	printf("\nStudent Number\t\tName\t\t\tGWA\t\tRemarks\n");
+	fprintf(outputPtr, "\t\tTechnological University of the Philippines\n");
+	fprintf(outputPtr, "\t\t\tSUMMARY OF GRADES\n");
+	fprintf(outputPtr, "\nSubject Code: CC131");
+	if(hours < 12) {
+		fprintf(outputPtr, "\t\t\t\t\tTime: %02d:%02d:%02d am\n", hours, minutes, seconds);
+	} else {
+		fprintf(outputPtr, "\t\t\t\t\tTime: %02d:%02d:%02d pm\n", hours - 12, minutes, seconds);
+	}
+	fprintf(outputPtr, "Subject Description: Computer Programming 1\t\tRoom: Online\n");
+	fprintf(outputPtr, "Semester: 1\tSY: 2020-2021\n");
+	fprintf(outputPtr, "\nStudent Number\t\tName\t\t\tGWA\t\tRemarks\n");
 	while((fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
 		printf("%s\t\t%s %s\t\t%.2f\t\t%s\n", studentNo, fname, lname, gwa(grade1,grade2,grade3,grade4), verdict2(gwa(grade1,grade2,grade3,grade4)));
 		fprintf(outputPtr, "%s\t\t%s %s\t\t%.2f\t\t%s\n", studentNo, fname, lname, gwa(grade1,grade2,grade3,grade4), verdict2(gwa(grade1,grade2,grade3,grade4)));
@@ -436,11 +518,11 @@ void generateGSR() {
 		}
 	}
 
-	printf("\nTotal Students: %d\n", totalStudent);
+	printf("\nTotal Students: %d\t\t\t\t\tDate: %02d/%02d/%d\n", totalStudent, month, day, year);
 	printf("Total Passed: %d\n", pass);
 	printf("Total Failed: %d\n", fail);
 	printf("Total Dropped: %d\n", drop);
-	fprintf(outputPtr, "\nTotal Students: %d\n", totalStudent);
+	fprintf(outputPtr, "\nTotal Students: %d\t\t\t\t\tDate: %02d/%02d/%d\n", totalStudent, month, day, year);
 	fprintf(outputPtr, "Total Passed: %d\n", pass);
 	fprintf(outputPtr, "Total Failed: %d\n", fail);
 	fprintf(outputPtr, "Total Dropped: %d", drop);
@@ -462,10 +544,11 @@ int main(void) {
 		printf("3) Delete Student\n");
 		printf("4) Display Student\n");
 		printf("5) Display All\n");
-		printf("6) Compute Grade\n");
-		printf("7) Generate Grade Summary Report\n");
-		printf("8) Exit\n");
-		printf("\nEnter choice (1/2/3/4/5/6/7/8): ");
+		printf("6) Display Dropped Students\n");
+		printf("7) Compute Grade\n");
+		printf("8) Generate Grade Summary Report\n");
+		printf("9) Exit\n");
+		printf("\nEnter choice (1/2/3/4/5/6/7/8/9): ");
 		scanf("%d", &select);
 
 		switch(select) {
@@ -485,15 +568,18 @@ int main(void) {
 				displayAll();
 				break;
 			case 6:
-				computeGrade();
+				displayDrop();
 				break;
 			case 7:
-				generateGSR();
+				computeGrade();
 				break;
 			case 8:
+				generateGSR();
+				break;
+			case 9:
 				exit(0);
 			default:
-				system("cls");
+				continue;
 		}
 	}
 }
