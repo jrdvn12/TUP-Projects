@@ -1,0 +1,6 @@
+Name			GWA			Grade Letter
+Jared Bruno			87.00			     B
+CJ Hilario			93.00			     A
+
+Total Passed: 2
+Total Failed: 0

@@ -3,7 +3,7 @@
 #include <string.h>
 #include <conio.h>
 
-FILE *recordptr, *tempPtr, *droppedPtr;
+FILE *recordPtr, *tempPtr, *droppedPtr, *outputPtr;
 
 void addStudent() {
 	system("cls");
@@ -39,9 +39,9 @@ void addStudent() {
 	scanf("%c", &choice);
 	if(choice == 'Y' || choice == 'y') {
 		printf("\tSaving student record...\n");
-		recordptr = fopen("record.txt", "a");
-		fprintf(recordptr, "%s %s %.2f %.2f %.2f %.2f\n", studentNo, name, grade1, grade2, grade3, grade4);
-		fclose(recordptr);
+		recordPtr = fopen("record.txt", "a");
+		fprintf(recordPtr, "%s %s %.2f %.2f %.2f %.2f\n", studentNo, name, grade1, grade2, grade3, grade4);
+		fclose(recordPtr);
 	} else {
 		printf("\tData discarded.\n");
 	}
@@ -53,9 +53,9 @@ void addStudent() {
 void editStudent() {
 	system("cls");
 
-	recordptr=fopen("record.txt", "r");
+	recordPtr=fopen("record.txt", "r");
 
-	if(!recordptr) {
+	if(!recordPtr) {
 		printf("No existing student record. Go back to MAIN MENU and use the Add Student feature.\n");
 		printf("\nPress ANY key to return to MAIN MENU...");
 		getch();
@@ -68,7 +68,7 @@ void editStudent() {
 	scanf("%s", &searchStudentNo);
 	fflush(stdin);
 
-	while((fscanf(recordptr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
+	while((fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
 		if(strcmp(studentNo, searchStudentNo) == 0) {
 			break;
 		}
@@ -92,8 +92,8 @@ void editStudent() {
 				fflush(stdin);
 
 				printf("\tUpdating record...\n");
-				rewind(recordptr);
-				while(fscanf(recordptr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
+				rewind(recordPtr);
+				while(fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
 					if(strcmp(studentNo, searchStudentNo) == 0) {
 						fprintf(tempPtr, "%s %s %s %.2f %.2f %.2f %.2f\n", studentNo, fname, lname, newGrade, grade2, grade3, grade4);
 					} else {
@@ -102,7 +102,7 @@ void editStudent() {
 				}
 
 				fclose(tempPtr);
-				fclose(recordptr);
+				fclose(recordPtr);
 				remove("record.txt");
 				rename("replace.txt", "record.txt");
 
@@ -114,8 +114,8 @@ void editStudent() {
 				fflush(stdin);
 
 				printf("\tUpdating record...\n");
-				rewind(recordptr);
-				while(fscanf(recordptr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
+				rewind(recordPtr);
+				while(fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
 					if(strcmp(studentNo, searchStudentNo) == 0) {
 						fprintf(tempPtr, "%s %s %s %.2f %.2f %.2f %.2f\n", studentNo, fname, lname, grade1, newGrade, grade3, grade4);
 					} else {
@@ -124,7 +124,7 @@ void editStudent() {
 				}
 
 				fclose(tempPtr);
-				fclose(recordptr);
+				fclose(recordPtr);
 				remove("record.txt");
 				rename("replace.txt", "record.txt");
 
@@ -136,8 +136,8 @@ void editStudent() {
 				fflush(stdin);
 
 				printf("\tUpdating record...\n");
-				rewind(recordptr);
-				while(fscanf(recordptr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
+				rewind(recordPtr);
+				while(fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
 					if(strcmp(studentNo, searchStudentNo) == 0) {
 						fprintf(tempPtr, "%s %s %s %.2f %.2f %.2f %.2f\n", studentNo, fname, lname, grade1, grade2, newGrade, grade4);
 					} else {
@@ -146,7 +146,7 @@ void editStudent() {
 				}
 
 				fclose(tempPtr);
-				fclose(recordptr);
+				fclose(recordPtr);
 				remove("record.txt");
 				rename("replace.txt", "record.txt");
 
@@ -158,8 +158,8 @@ void editStudent() {
 				fflush(stdin);
 				
 				printf("\tUpdating record...\n");
-				rewind(recordptr);
-				while(fscanf(recordptr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
+				rewind(recordPtr);
+				while(fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
 					if(strcmp(studentNo, searchStudentNo) == 0) {
 						fprintf(tempPtr, "%s %s %s %.2f %.2f %.2f %.2f\n", studentNo, fname, lname, grade1, grade2, grade3, newGrade);
 					} else {
@@ -168,7 +168,7 @@ void editStudent() {
 				}
 
 				fclose(tempPtr);
-				fclose(recordptr);
+				fclose(recordPtr);
 				remove("record.txt");
 				rename("replace.txt", "record.txt");
 
@@ -178,7 +178,7 @@ void editStudent() {
 		}
 	}
 
-	fclose(recordptr);
+	fclose(recordPtr);
 	
 	printf("\nPress ANY key to return to MAIN MENU...");
 	getch();
@@ -187,9 +187,9 @@ void editStudent() {
 void deleteStudent() {
 	system("cls");
 
-	recordptr=fopen("record.txt", "r");
+	recordPtr=fopen("record.txt", "r");
 
-	if(!recordptr) {
+	if(!recordPtr) {
 		printf("No existing student record. Go back to MAIN MENU and use the Add Student feature.\n");
 		printf("\nPress ANY key to return to MAIN MENU...");
 		getch();
@@ -202,7 +202,7 @@ void deleteStudent() {
 	scanf("%s", &searchStudentNo);
 	fflush(stdin);
 
-	while((fscanf(recordptr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
+	while((fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
 		if(strcmp(studentNo, searchStudentNo) == 0) {
 			break;
 		}
@@ -210,7 +210,7 @@ void deleteStudent() {
 
 	if(strcmp(studentNo, searchStudentNo) != 0) {
 		printf("Student does not exist.\n");
-		fclose(recordptr);
+		fclose(recordPtr);
 	} else {
 		droppedPtr=fopen("dropped.txt", "a");
 		tempPtr=fopen("replace.txt", "w");
@@ -223,22 +223,22 @@ void deleteStudent() {
 
 		if(choice == 'Y' || choice == 'y') {
 			printf("\tDeleting this record...\n");
-			rewind(recordptr);
-			while(fscanf(recordptr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
+			rewind(recordPtr);
+			while(fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4) != EOF) {
 				if(strcmp(studentNo, searchStudentNo) != 0) {
 					fprintf(tempPtr, "%s %s %s %.2f %.2f %.2f %.2f\n", studentNo, fname, lname, grade1, grade2, grade3, grade4);
 				} else {
 					fprintf(droppedPtr, "%s %s %s %.2f %.2f %.2f %.2f\n", studentNo, fname, lname, grade1, grade2, grade3, grade4);
 				}
 			}
-			fclose(recordptr);
+			fclose(recordPtr);
 			fclose(tempPtr);
 			fclose(droppedPtr);
 			remove("record.txt");
 			rename("replace.txt", "record.txt");
 		} else {
 			printf("\tRecord not deleted.\n");
-			fclose(recordptr);
+			fclose(recordPtr);
 			fclose(tempPtr);
 			fclose(droppedPtr);
 		}
@@ -251,9 +251,9 @@ void deleteStudent() {
 void displayStudent() {
 	system("cls");
 
-	recordptr=fopen("record.txt", "r");
+	recordPtr=fopen("record.txt", "r");
 
-	if(!recordptr) {
+	if(!recordPtr) {
 		printf("No existing student record. Go back to MAIN MENU and use the Add Student feature.\n");
 		printf("\nPress ANY key to return to MAIN MENU...");
 		getch();
@@ -266,7 +266,7 @@ void displayStudent() {
 	scanf("%s%s", &searchFname, &searchLname);
 	fflush(stdin);
 
-	while((fscanf(recordptr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
+	while((fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
 		if(strcmp(fname, searchFname) == 0 && strcmp(lname, searchLname) == 0) {
 			break;
 		}
@@ -274,11 +274,11 @@ void displayStudent() {
 
 	if(strcmp(fname, searchFname) != 0 && strcmp(lname, searchLname) != 0) {
 		printf("Student does not exist.\n");
-		fclose(recordptr);
+		fclose(recordPtr);
 	} else {
 		printf("\nFirst Name: %s\nLast Name: %s\n", fname, lname);
 		printf("Grade 1: %.2f\nGrade 2: %.2f\nGrade 3: %.2f\nGrade 4: %.2f\n", grade1, grade2, grade3, grade4);
-		fclose(recordptr);
+		fclose(recordPtr);
 	}
 
 	printf("\nPress ANY key to return to MAIN MENU...");
@@ -287,14 +287,104 @@ void displayStudent() {
 
 void displayAll() {
 	system("cls");
-	printf("Display All Screen\n");
+	
+	recordPtr=fopen("record.txt", "r");
+
+	if(!recordPtr) {
+		printf("No existing student record. Go back to MAIN MENU and use the Add Student feature.\n");
+		printf("\nPress ANY key to return to MAIN MENU...");
+		getch();
+		return;
+	}
+
+	char studentNo[50], fname[50], lname[50];
+	float grade1=0, grade2=0, grade3=0, grade4=0;
+
+	while((fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
+		printf("\nStudent Number: %s\n", studentNo);
+		printf("First Name: %s\nLast Name: %s\n", fname, lname);
+		printf("Grade 1: %.2f\nGrade 2: %.2f\nGrade 3: %.2f\nGrade 4: %.2f\n", grade1, grade2, grade3, grade4);
+	}
+
+	fclose(recordPtr);
+
 	printf("\nPress ANY key to return to MAIN MENU...");
 	getch();
 }
 
+float gwa(float grade1, float grade2, float grade3, float grade4) {
+	float sum=0;
+	sum=grade1+grade2+grade3+grade4;
+	float gwa=sum/4;
+	return gwa;
+}
+
+char grade(float gwa) {
+	if(gwa>90) {
+		return 'A';
+	} else if(gwa>=81&&gwa<91) {
+		return 'B';
+	} else if(gwa>=75&&gwa<81) {
+		return 'C';
+	} else {
+		return 'F';
+	}
+}
+
+int verdict(float gwa) {
+	if(gwa>=75) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+void loading() {
+	printf("Computing Grades, Please Wait ");
+	for(int i=1; i<=10; i++) {
+		for(int j=1; j<=100000000; j++) {}
+		printf(".");
+	}
+	printf(" Complete!\n");
+}
+
 void computeGrade() {
 	system("cls");
-	printf("Compute Grade Screen\n");
+
+	char studentNo[50], fname[50], lname[50];
+	float grade1=0, grade2=0, grade3=0, grade4=0;
+    int pass=0, fail=0;
+
+	recordPtr=fopen("record.txt", "r");
+
+	if(!recordPtr) {
+		printf("No existing student record. Go back to MAIN MENU and use the Add Student feature.\n");
+		printf("\nPress ANY key to return to MAIN MENU...");
+		getch();
+		return;
+	}
+
+	loading();
+	printf("\nPress ANY key to Display...");
+	getch();
+
+	system("cls");
+	outputPtr=fopen("output.txt", "w");
+	printf("Name\t\t\t\tGWA\t\t\t\tGrade Letter\n");
+	fprintf(outputPtr, "Name\t\t\t\tGWA\t\t\tGrade Letter\n");
+	while((fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
+		printf("%s %s\t\t\t%.2f\t\t\t     %c\n", fname, lname, gwa(grade1,grade2,grade3,grade4), grade(gwa(grade1,grade2,grade3,grade4)));
+		fprintf(outputPtr, "%s %s\t\t\t%.2f\t\t\t     %c\n", fname, lname, gwa(grade1,grade2,grade3,grade4), grade(gwa(grade1,grade2,grade3,grade4)));
+		verdict(gwa(grade1,grade2,grade3,grade4))?pass++:fail++;
+	}
+
+	printf("\nTotal Passed: %d\n", pass);
+	printf("Total Failed: %d\n", fail);
+	fprintf(outputPtr, "\nTotal Passed: %d\n", pass);
+	fprintf(outputPtr, "Total Failed: %d", fail);
+	fclose(recordPtr);
+	fclose(outputPtr);
+
 	printf("\nPress ANY key to return to MAIN MENU...");
 	getch();
 }
