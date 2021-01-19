@@ -16,8 +16,8 @@ void addStudent() {
 	scanf("%s", &studentNo);
 	fflush(stdin);
 
-	printf("Enter Name: ");
-	gets(name);
+	printf("Enter Student Name (First and Last Name): ");
+	fgets(name, 50, stdin);
 	fflush(stdin);
 
 	printf("Enter Score 1: ");
@@ -65,7 +65,7 @@ void editStudent() {
 
 	char searchStudentNo[50], studentNo[50], fname[50], lname[50];
 	float grade1=0, grade2=0, grade3=0, grade4=0, newGrade=0;
-	printf("Search Student Number: ");
+	printf("Enter Student Number: ");
 	scanf("%s", &searchStudentNo);
 	fflush(stdin);
 
