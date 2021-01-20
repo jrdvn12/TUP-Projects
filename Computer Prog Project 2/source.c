@@ -408,7 +408,7 @@ void computeGrade() {
 
 	char studentNo[50], fname[50], lname[50];
 	float grade1=0, grade2=0, grade3=0, grade4=0;
-    int pass=0, fail=0;
+	int pass=0, fail=0;
 
 	recordPtr=fopen("record.txt", "r");
 
@@ -435,8 +435,8 @@ void computeGrade() {
 	}
 
 	printf("\nTotal Passed: %d\n", pass);
-	printf("Total Failed: %d\n", fail);
 	fprintf(outputPtr, "\nTotal Passed: %d\n", pass);
+	printf("Total Failed: %d\n", fail);
 	fprintf(outputPtr, "Total Failed: %d", fail);
 	fclose(recordPtr);
 	fclose(outputPtr);
@@ -448,23 +448,6 @@ void computeGrade() {
 void generateGSR() {
 	system("cls");
 
-	char studentNo[50], fname[50], lname[50];
-	float grade1=0, grade2=0, grade3=0, grade4=0;
-    int pass=0, fail=0, drop=0, totalStudent=0;
-	int hours, minutes, seconds, day, month, year;
-
-	time_t now;
-	time(&now);
-
-	struct tm *local = localtime(&now);
-
-	hours = local->tm_hour;
-	minutes = local->tm_min;
-	seconds = local->tm_sec;
-	day = local->tm_mday;
-	month = local->tm_mon + 1;
-	year = local->tm_year + 1900;
-
 	recordPtr=fopen("record.txt", "r");
 
 	if(!recordPtr) {
@@ -473,7 +456,22 @@ void generateGSR() {
 		getch();
 		return;
 	}
-	
+
+	char studentNo[50], fname[50], lname[50];
+	float grade1=0, grade2=0, grade3=0, grade4=0;
+	int pass=0, fail=0, drop=0, totalStudent=0;
+	int hours, minutes, seconds, day, month, year;
+
+	time_t now;
+	time(&now);
+	struct tm *local = localtime(&now);
+	hours = local->tm_hour;
+	minutes = local->tm_min;
+	seconds = local->tm_sec;
+	day = local->tm_mday;
+	month = local->tm_mon + 1;
+	year = local->tm_year + 1900;
+
 	printf("Generating Grade Summary Report ");
 	loading();
 	printf("\nPress ANY key to display...");
@@ -482,26 +480,23 @@ void generateGSR() {
 	system("cls");
 	outputPtr=fopen("output2.txt", "w");
 	printf("\t\tTechnological University of the Philippines\n");
-	printf("\t\t\tSUMMARY OF GRADES\n");
-	printf("\nSubject Code: CC131");
-	if(hours < 12) {
-		printf("\t\t\t\t\tTime: %02d:%02d:%02d AM\n", hours, minutes, seconds);
-	} else {
-		printf("\t\t\t\t\tTime: %02d:%02d:%02d PM\n", hours - 12, minutes, seconds);
-	}
-	printf("Subject Description: Computer Programming 1\t\tRoom: Online\n");
-	printf("Semester: 1\tSY: 2020-2021\n");
-	printf("\nStudent Number\t\tName\t\t\tGWA\t\tRemarks\n");
 	fprintf(outputPtr, "\t\tTechnological University of the Philippines\n");
+	printf("\t\t\tSUMMARY OF GRADES\n");
 	fprintf(outputPtr, "\t\t\tSUMMARY OF GRADES\n");
+	printf("\nSubject Code: CC131");
 	fprintf(outputPtr, "\nSubject Code: CC131");
 	if(hours < 12) {
-		fprintf(outputPtr, "\t\t\t\t\tTime: %02d:%02d:%02d am\n", hours, minutes, seconds);
+		printf("\t\t\t\t\tTime: %02d:%02d:%02d AM\n", hours, minutes, seconds);
+		fprintf(outputPtr, "\t\t\t\t\tTime: %02d:%02d:%02d AM\n", hours, minutes, seconds);
 	} else {
-		fprintf(outputPtr, "\t\t\t\t\tTime: %02d:%02d:%02d pm\n", hours - 12, minutes, seconds);
+		printf("\t\t\t\t\tTime: %02d:%02d:%02d PM\n", hours - 12, minutes, seconds);
+		fprintf(outputPtr, "\t\t\t\t\tTime: %02d:%02d:%02d PM\n", hours - 12, minutes, seconds);
 	}
+	printf("Subject Description: Computer Programming 1\t\tRoom: Online\n");
 	fprintf(outputPtr, "Subject Description: Computer Programming 1\t\tRoom: Online\n");
+	printf("Semester: 1\tSY: 2020-2021\n");
 	fprintf(outputPtr, "Semester: 1\tSY: 2020-2021\n");
+	printf("\nStudent Number\t\tName\t\t\tGWA\t\tRemarks\n");
 	fprintf(outputPtr, "\nStudent Number\t\tName\t\t\tGWA\t\tRemarks\n");
 	while((fscanf(recordPtr, "%s %s %s %f %f %f %f", &studentNo, &fname, &lname, &grade1, &grade2, &grade3, &grade4)) != EOF) {
 		printf("%s\t\t%s %s\t\t%.2f\t\t%s\n", studentNo, fname, lname, gwa(grade1,grade2,grade3,grade4), verdict2(gwa(grade1,grade2,grade3,grade4)));
