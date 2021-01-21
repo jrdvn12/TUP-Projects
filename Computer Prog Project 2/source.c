@@ -291,7 +291,8 @@ void displayStudent() {
 		printf("Student does not exist.\n");
 		fclose(recordPtr);
 	} else {
-		printf("\nFirst Name: %s\nLast Name: %s\n", fname, lname);
+		printf("\nStudent Number: %s\n", studentNo);
+		printf("First Name: %s\nLast Name: %s\n", fname, lname);
 		printf("Grade 1: %.2f\nGrade 2: %.2f\nGrade 3: %.2f\nGrade 4: %.2f\n", grade1, grade2, grade3, grade4);
 		fclose(recordPtr);
 	}
