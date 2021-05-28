@@ -7,6 +7,8 @@ string logged_user = "guest";
 ofstream accountLog, customerRecord;
 ifstream read_accountLog, read_customerRecord;
 
+int rate_ordinary = 2000, rate_luxury = 6000, rate_royal = 10000;
+
 void regist() {
 	string username, password, confirmPass, temp1;
 	
@@ -81,6 +83,7 @@ void login() {
 	system("cls");
 
 	string username, password, temp1, temp2;
+	char confirm;
 
 	read_accountLog.open("accounts.txt");
 	if(!read_accountLog) {
@@ -121,8 +124,13 @@ void login() {
 			break;
 		} else {
 			cout << "Invalid username or password. Please try again." << "\n\n";
-			cout << "Press ENTER to try again...";
-			cin.get();
+			cout << "Enter Y to try again, N to go back to Main Menu...";
+			cin >> confirm;
+			if(confirm == 'Y' || confirm == 'y') {
+				continue;
+			} else {
+				return;
+			}
 		}
 	}
 	read_accountLog.close();
@@ -130,7 +138,7 @@ void login() {
 
 bool checkRoomAvail(int roomNum) {
 	string fname, lname, username;
-	int temp1;
+	int temp1, nightNum;
 	long long phone;
 
 	read_customerRecord.open("record.txt");
@@ -138,7 +146,7 @@ bool checkRoomAvail(int roomNum) {
 	read_customerRecord.clear();
 	read_customerRecord.seekg(0);
 	while(!read_customerRecord.eof()) {
-		read_customerRecord >> username >> temp1 >> fname >> lname >> phone;
+		read_customerRecord >> username >> temp1 >> fname >> lname >> phone >> nightNum;
 		if(roomNum == temp1) {
 			break;
 		}
@@ -148,6 +156,17 @@ bool checkRoomAvail(int roomNum) {
 	} else {
 		return false;
 	}
+}
+
+int compute_total(int nightNum, int roomNum) {
+	if(roomNum>=1&&roomNum<=20) {
+		return nightNum*2000;
+	} else if(roomNum>=21&&roomNum<=40) {
+		return nightNum*6000;
+	} else if(roomNum>=41&&roomNum<=60) {
+		return nightNum*10000;
+	}
+	return 0;
 }
 
 void customer_reserve() {
@@ -162,9 +181,10 @@ void customer_reserve() {
 
 	customerRecord.open("record.txt", ios::app);
 
-	int select, roomNum;
+	int select, roomNum, nightNum;
 	long long phone;
 	string name;
+	char confirm;
 
 	cout << "Choose type of room." << "\n\n";
 	cout << "(1) Ordinary Room - PHP 2,000/night" << '\n';
@@ -203,9 +223,19 @@ void customer_reserve() {
 				cout << "Enter Phone Number: ";
 				cin >> phone;
 
-				customerRecord << logged_user << ' ' << roomNum << ' ' << name << ' ' << phone << '\n';
-				customerRecord.close();
-				
+				cout << "Enter Number of Nights: ";
+				cin >> nightNum;
+				cin.ignore(numeric_limits<streamsize>::max(),'\n');
+
+				cout << "Confirm reservation? (Y for Yes, N to go back): ";
+				cin >> confirm;
+				if(confirm == 'Y' || confirm == 'y') {
+					customerRecord << logged_user << ' ' << roomNum << ' ' << name << ' ' << phone << ' ' << nightNum << '\n';
+					customerRecord.close();
+				} else {
+					customer_reserve();
+				}
+			
 				system("cls");
 				cout << "The chosen room has been booked." << "\n\n";
 				cout << "THANK YOU FOR TRUSTING OUR SERVICE" << "\n\n";
@@ -242,8 +272,17 @@ void customer_reserve() {
 				cout << "Enter Phone Number: ";
 				cin >> phone;
 
-				customerRecord << logged_user << ' ' << roomNum << ' ' << name << ' ' << phone << '\n';
-				customerRecord.close();
+				cout << "Enter Number of Nights: ";
+				cin >> nightNum;
+
+				cout << "Confirm reservation? (Y for Yes, N to go back): ";
+				cin >> confirm;
+				if(confirm == 'Y') {
+					customerRecord << logged_user << ' ' << roomNum << ' ' << name << ' ' << phone << ' ' << nightNum << '\n';
+					customerRecord.close();
+				} else {
+					customer_reserve();
+				}
 				
 				system("cls");
 				cout << "The chosen room has been booked." << "\n\n";
@@ -281,8 +320,17 @@ void customer_reserve() {
 				cout << "Enter Phone Number: ";
 				cin >> phone;
 
-				customerRecord << logged_user << ' ' << roomNum << ' ' << name << ' ' << phone << '\n';
-				customerRecord.close();
+				cout << "Enter Number of Nights: ";
+				cin >> nightNum;
+
+				cout << "Confirm reservation? (Y for Yes, N to go back): ";
+				cin >> confirm;
+				if(confirm == 'Y') {
+					customerRecord << logged_user << ' ' << roomNum << ' ' << name << ' ' << phone << ' ' << nightNum << '\n';
+					customerRecord.close();
+				} else {
+					customer_reserve();
+				}
 				
 				system("cls");
 				cout << "The chosen room has been booked." << "\n\n";
@@ -300,6 +348,65 @@ void customer_reserve() {
 	}
 }
 
+void check_reserve() {
+	system("cls");
+	if(logged_user == "guest") {
+		cout << "Please make an account first or login your existing account." << "\n\n";
+		cout << "Press ENTER to return to Main Menu...";
+		cin.ignore(numeric_limits<streamsize>::max(),'\n');
+		cin.get();
+		return;
+	}
+	string fname, lname, temp1;
+	int roomNum, nightNum;
+	long long phone;
+
+	read_customerRecord.open("record.txt");
+	if(!read_customerRecord) {
+		cout << "No existing room reservation info." << "\n\n";
+		cout << "Press ENTER to return to Main Menu...";
+		cin.ignore(numeric_limits<streamsize>::max(),'\n');
+		cin.get();
+		return;
+
+	}
+
+	read_customerRecord.clear();
+	read_customerRecord.seekg(0);
+	while(!read_customerRecord.eof()) {
+		read_customerRecord >> temp1 >> roomNum >> fname >> lname >> phone >> nightNum;
+		if(logged_user == temp1) {
+			break;
+		}
+	}
+	if(logged_user == temp1) {
+		cout << "Username: " << temp1 << '\n';
+		cout << "Room No.: " << roomNum << ' ';
+		if(roomNum>=1&&roomNum<=20) {
+			cout << "(Ordinary Room)" << '\n';
+		} else if(roomNum>=21&&roomNum<=40) {
+			cout << "(Luxury Room)" << '\n';
+		} else if(roomNum>=41&&roomNum<=60) {
+			cout << "(Royal Room)" << '\n';
+		}
+		cout << "Name: " << fname << ' ' << lname << '\n';
+		cout << "Phone No.: " << phone << '\n';
+		cout << "Number of night(s): " << nightNum << '\n';
+		cout << "Total amount to be paid: PHP " << compute_total(nightNum, roomNum) << "\n\n";
+
+		cout << "Press ENTER to return to Main Menu...";
+		cin.ignore(numeric_limits<streamsize>::max(),'\n');
+		cin.get();
+		return;
+	} else {
+		cout << "No existing room reservation info." << "\n\n";
+		cout << "Press ENTER to return to Main Menu...";
+		cin.ignore(numeric_limits<streamsize>::max(),'\n');
+		cin.get();
+		return;
+	}
+}
+
 int main() {
 	int select;
 	while(true) {
@@ -310,7 +417,10 @@ int main() {
 		cout << "(1) Register" << '\n';
 		cout << "(2) Login" << '\n';
 		cout << "(3) Book a Room" << '\n';
-		cout << "(4) Exit" << "\n\n";
+		cout << "(4) Check Reservation" << '\n';
+		cout << "(5) Cancel Reservation" << '\n';
+		cout << "(6) View Customer Records" << '\n';
+		cout << "(7) Exit" << "\n\n";
 		cout << "Enter: ";
 		cin >> select;
 		
@@ -325,6 +435,9 @@ int main() {
 				customer_reserve();
 				break;
 			case 4:
+				check_reserve();
+				break;
+			case 5:
 				exit(0);
 			default:
 				continue;
