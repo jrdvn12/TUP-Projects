@@ -25,11 +25,13 @@ void regist() {
 			cout << '\n';
 			cout << "Username exceeded 15 characters." << "\n\n";
 			cout << "Press ENTER to try again...";
+			cin.ignore(numeric_limits<streamsize>::max(),'\n');
 			cin.get();
 			continue;
 		} else if(username == "admin") {
 			cout << "You cannot create an admin account." << "\n\n";
 			cout << "Press ENTER to try again...";
+			cin.ignore(numeric_limits<streamsize>::max(),'\n');
 			cin.get();
 			continue;
 		}
@@ -43,6 +45,7 @@ void regist() {
 		if(temp1 == username) {
 			cout << "Username is taken." << "\n\n";
 			cout << "Press ENTER to try again...";
+			cin.ignore(numeric_limits<streamsize>::max(),'\n');
 			cin.get();
 			continue;
 		}
@@ -54,6 +57,7 @@ void regist() {
 			cout << '\n';
 			cout << "Password exceeded 15 characters." << "\n\n";
 			cout << "Press ENTER to try again...";
+			cin.ignore(numeric_limits<streamsize>::max(),'\n');
 			cin.get();
 			continue;
 		}
