@@ -1,7 +1,8 @@
 #include <iostream>
 #include <fstream>
-#include <cstring>
+#include <string>
 #include <ctime>
+#include <limits>
 using namespace std;
 
 string logged_user = "guest";
@@ -20,7 +21,6 @@ void regist() {
 
 		cout << "Enter Username (max 15 characters): ";
 		cin >> username;
-		cin.ignore(numeric_limits<streamsize>::max(),'\n');
 		if(username.size()>15) {
 			cout << '\n';
 			cout << "Username exceeded 15 characters." << "\n\n";
@@ -50,7 +50,6 @@ void regist() {
 		
 		cout << "Enter Password (max 15 characters): ";
 		cin >> password;
-		cin.ignore(numeric_limits<streamsize>::max(),'\n');
 		if(password.size()>15) {
 			cout << '\n';
 			cout << "Password exceeded 15 characters." << "\n\n";
@@ -61,7 +60,6 @@ void regist() {
 
 		cout << "Confirm Password: ";
 		cin >> confirmPass;
-		cin.ignore(numeric_limits<streamsize>::max(),'\n');
 
 		cout << '\n';
 
@@ -76,11 +74,13 @@ void regist() {
 			cout << "Username: " << username << '\n';
 			cout << "Password: " << password << "\n\n";
 			cout << "Press ENTER to return to Main Menu...";
+			cin.ignore(numeric_limits<streamsize>::max(),'\n');
 			cin.get();
 			return;
 		} else {
 			cout << "Password does not match. Please try again." << "\n\n";
 			cout << "Press ENTER to try again...";
+			cin.ignore(numeric_limits<streamsize>::max(),'\n');
 			cin.get();
 		}
 	}
@@ -106,11 +106,9 @@ void login() {
 		cout << "Login Menu" << "\n\n";
 		cout << "Enter Username: ";
 		cin >> username;
-		cin.ignore(numeric_limits<streamsize>::max(),'\n');
 
 		cout << "Enter Password: ";
 		cin >> password;
-		cin.ignore(numeric_limits<streamsize>::max(),'\n');
 
 		cout << '\n';
 
@@ -128,6 +126,7 @@ void login() {
 			cout << "Login Success!" << "\n\n";
 			cout << "Press ENTER to return to Main Menu...";
 			read_accountLog.close();
+			cin.ignore(numeric_limits<streamsize>::max(),'\n');
 			cin.get();
 			return;
 		} else {
@@ -190,6 +189,7 @@ void customer_reserve() {
 		return;
 	}
 
+	customerRecord.open("record.txt", ios::app);
 
 	int select, roomNum, nightNum;
 	int day, hr, mn;
@@ -213,7 +213,6 @@ void customer_reserve() {
 			while(true) {
 				cout << "Enter Room Number (1-20): ";
 				cin >> roomNum;
-				cin.ignore(numeric_limits<streamsize>::max(),'\n');
 				if(roomNum<1 || roomNum>20) {
 					continue;
 				} else {
@@ -225,10 +224,13 @@ void customer_reserve() {
 
 				cout << "Room is already taken." << "\n\n";
 				cout << "Press ENTER to go back...";
+				customerRecord.close();
+				cin.ignore(numeric_limits<streamsize>::max(),'\n');
 				cin.get();
 				customer_reserve();
 			} else {
 				cout << '\n';
+				cout << "Personal Information" << "\n\n";
 				cout << "Enter First Name: ";
 				cin >> fname;
 
@@ -240,6 +242,9 @@ void customer_reserve() {
 
 				cout << "Enter Number of Nights: ";
 				cin >> nightNum;
+
+				cout << '\n';
+				cout << "Arrival Date & Time" << "\n\n";
 
 				cout << "Enter Month (ex. January, March): ";
 				cin >> month;
@@ -262,11 +267,10 @@ void customer_reserve() {
 				cout << "Confirm reservation? (Y for Yes, N to go back): ";
 				cin >> confirm;
 				if(confirm == 'Y' || confirm == 'y') {
-					customerRecord.open("record.txt", ios::app);
 					customerRecord << logged_user << ' ' << roomNum << ' ' << fname << ' ' << lname << ' ' << phone << ' ' << nightNum << ' ';
 					customerRecord << month << ' ' << day << ' ' << hr << ' ' << mn << ' ' << tp << '\n';
-					customerRecord.close();
 				} else {
+					customerRecord.close();
 					customer_reserve();
 				}
 			
@@ -275,6 +279,7 @@ void customer_reserve() {
 				cout << "THANK YOU FOR TRUSTING OUR SERVICE" << "\n\n";
 				cout << "Press ENTER to return to Main Menu...";
 				cin.ignore(numeric_limits<streamsize>::max(),'\n');
+				customerRecord.close();
 				cin.get();
 				return;
 			}
@@ -283,7 +288,6 @@ void customer_reserve() {
 			while(true) {
 				cout << "Enter Room Number (21-40): ";
 				cin >> roomNum;
-				cin.ignore(numeric_limits<streamsize>::max(),'\n');
 				if(roomNum<21 || roomNum>40) {
 					continue;
 				} else {
@@ -295,10 +299,13 @@ void customer_reserve() {
 
 				cout << "Room is already taken." << "\n\n";
 				cout << "Press ENTER to go back...";
+				customerRecord.close();
+				cin.ignore(numeric_limits<streamsize>::max(),'\n');
 				cin.get();
 				customer_reserve();
 			} else {
 				cout << '\n';
+				cout << "Personal Information" << "\n\n";
 				cout << "Enter First Name: ";
 				cin >> fname;
 
@@ -310,6 +317,9 @@ void customer_reserve() {
 
 				cout << "Enter Number of Nights: ";
 				cin >> nightNum;
+
+				cout << '\n';
+				cout << "Arrival Date & Time" << "\n\n";
 
 				cout << "Enter Month (ex. January, March): ";
 				cin >> month;
@@ -332,11 +342,10 @@ void customer_reserve() {
 				cout << "Confirm reservation? (Y for Yes, N to go back): ";
 				cin >> confirm;
 				if(confirm == 'Y' || confirm == 'y') {
-					customerRecord.open("record.txt", ios::app);
 					customerRecord << logged_user << ' ' << roomNum << ' ' << fname << ' ' << lname << ' ' << phone << ' ' << nightNum << ' ';
 					customerRecord << month << ' ' << day << ' ' << hr << ' ' << mn << ' ' << tp << '\n';
-					customerRecord.close();
 				} else {
+					customerRecord.close();
 					customer_reserve();
 				}
 			
@@ -345,6 +354,7 @@ void customer_reserve() {
 				cout << "THANK YOU FOR TRUSTING OUR SERVICE" << "\n\n";
 				cout << "Press ENTER to return to Main Menu...";
 				cin.ignore(numeric_limits<streamsize>::max(),'\n');
+				customerRecord.close();
 				cin.get();
 				return;
 			}
@@ -353,7 +363,6 @@ void customer_reserve() {
 			while(true) {
 				cout << "Enter Room Number (41-60): ";
 				cin >> roomNum;
-				cin.ignore(numeric_limits<streamsize>::max(),'\n');
 				if(roomNum<41 || roomNum>60) {
 					continue;
 				} else {
@@ -365,10 +374,13 @@ void customer_reserve() {
 
 				cout << "Room is already taken." << "\n\n";
 				cout << "Press ENTER to go back...";
+				customerRecord.close();
+				cin.ignore(numeric_limits<streamsize>::max(),'\n');
 				cin.get();
 				customer_reserve();
 			} else {
 				cout << '\n';
+				cout << "Personal Information" << "\n\n";
 				cout << "Enter First Name: ";
 				cin >> fname;
 
@@ -380,6 +392,9 @@ void customer_reserve() {
 
 				cout << "Enter Number of Nights: ";
 				cin >> nightNum;
+
+				cout << '\n';
+				cout << "Arrival Date & Time" << "\n\n";
 
 				cout << "Enter Month (ex. January, March): ";
 				cin >> month;
@@ -402,11 +417,11 @@ void customer_reserve() {
 				cout << "Confirm reservation? (Y for Yes, N to go back): ";
 				cin >> confirm;
 				if(confirm == 'Y' || confirm == 'y') {
-					customerRecord.open("record.txt", ios::app);
 					customerRecord << logged_user << ' ' << roomNum << ' ' << fname << ' ' << lname << ' ' << phone << ' ' << nightNum << ' ';
 					customerRecord << month << ' ' << day << ' ' << hr << ' ' << mn << ' ' << tp << '\n';
 					customerRecord.close();
 				} else {
+					customerRecord.close();
 					customer_reserve();
 				}
 			
@@ -415,13 +430,16 @@ void customer_reserve() {
 				cout << "THANK YOU FOR TRUSTING OUR SERVICE" << "\n\n";
 				cout << "Press ENTER to return to Main Menu...";
 				cin.ignore(numeric_limits<streamsize>::max(),'\n');
+				customerRecord.close();
 				cin.get();
 				return;
 			}
 			break;
 		case 4:
+			customerRecord.close();
 			return;
 		default:
+			customerRecord.close();
 			customer_reserve();
 	}
 }
