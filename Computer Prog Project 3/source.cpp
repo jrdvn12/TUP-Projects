@@ -207,7 +207,7 @@ void customer_reserve() {
 	char confirm;
 
 	read_customerRecord.open("record.txt");
-    read_customerRecord.clear();
+	read_customerRecord.clear();
 	read_customerRecord.seekg(0);
 	while(!read_customerRecord.eof()) {
 		read_customerRecord >> temp1 >> roomNum >> fname >> lname >> phone >> nightNum >> month >> day >> hr >> mn >> tp;
