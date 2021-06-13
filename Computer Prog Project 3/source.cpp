@@ -206,6 +206,8 @@ void customer_reserve() {
 	string fname, lname, tp, month, temp1;
 	char confirm;
 
+	customerRecord.open("record.txt", ios::app);
+
 	read_customerRecord.open("record.txt");
 	read_customerRecord.clear();
 	read_customerRecord.seekg(0);
@@ -213,18 +215,15 @@ void customer_reserve() {
 		read_customerRecord >> temp1 >> roomNum >> fname >> lname >> phone >> nightNum >> month >> day >> hr >> mn >> tp;
 		if(logged_user == temp1) {
 			cout << "You can only reserve one room at a time." << "\n\n";
-            cout << "Press ENTER to return to Main Menu...";
-            read_customerRecord.close();
-            cin.ignore(numeric_limits<streamsize>::max(),'\n');
-            cin.get();
-            return;
+			cout << "Press ENTER to return to Main Menu...";
+			read_customerRecord.close();
+			cin.ignore(numeric_limits<streamsize>::max(),'\n');
+			cin.get();
+			return;
 		}
 	}
 
-	customerRecord.open("record.txt", ios::app);
-
 	cout << "WELCOME TO THE HOTEL & RESORT" << "\n\n";
-
 	cout << "Choose type of room." << "\n\n";
 	cout << "(1) Ordinary Room - PHP 2,000/night" << '\n';
 	cout << "(2) Luxury Room - PHP 6,000/night" << '\n';
