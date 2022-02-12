@@ -9,15 +9,16 @@ ofstream filePtr2; // creates and writes to file
 void RLE() { // Run Length Encoding compression function
 	system("cls");
 
-	string fileName, fileStr;
+	string fileName, fileStr, compressed;
 
 	while(true) {
+        cout << "-----------------------------------------------------------\n\n";
 		cout << "Enter complete filename (with extension): ";
 		getline(cin, fileName);
 
 		filePtr.open(fileName);
 		if(!filePtr) {
-			cout << "File does not exist.\n\n";
+			cout << "\nERROR!! File does not exist.\n\n";
 			cout << "Press ENTER to try again...";
 			cin.get();
 			continue;
@@ -30,7 +31,9 @@ void RLE() { // Run Length Encoding compression function
 		getline(filePtr, fileStr);
 	}
 	filePtr.close();
-	
+    cout << "-----------------------------------------------------------\n\n";
+	cout << "Text file data before compression:\n\n" << fileStr << "\n\n";
+    cout << "-----------------------------------------------------------\n\n";
 	filePtr2.open(fileName);
 	for(int i=0; i<fileStr.length(); i++) {
 		int count=1;
@@ -45,8 +48,15 @@ void RLE() { // Run Length Encoding compression function
 		}
 	}
 	filePtr2.close();
-	
-	cout << "File Compression Complete!\n\n";
+
+	filePtr.open(fileName);
+	while(filePtr) {
+		getline(filePtr, compressed);
+	}
+	filePtr.close();
+
+	cout << "[File Compression Complete!]\n\n";
+	cout << "Text file data after compression:\n\n" << compressed << "\n\n";
 	cout << "Press ENTER to return to Main Menu...";
 	cin.get();
 	return;
@@ -62,12 +72,13 @@ void RLD() { // Run Length Decoding decompression function
 	string fileName, compressed, original;
 
 	while(true) {
+        cout << "-----------------------------------------------------------\n\n";
 		cout << "Enter complete filename (with extension): ";
 		getline(cin, fileName);
 
 		filePtr.open(fileName);
 		if(!filePtr) {
-			cout << "File does not exist.\n\n";
+			cout << "\nERROR!!!File does not exist.\n\n";
 			cout << "Press ENTER to try again...";
 			cin.get();
 			continue;
@@ -80,7 +91,9 @@ void RLD() { // Run Length Decoding decompression function
 		getline(filePtr, compressed);
 	}
 	filePtr.close();
-
+    cout << "-----------------------------------------------------------\n\n";
+	cout << "Text file data before decompression:\n\n" << compressed << "\n\n";
+    cout << "-----------------------------------------------------------\n\n";
 	int i=0;
 	int repeat;
 	while(i<compressed.length()) {
@@ -102,8 +115,9 @@ void RLD() { // Run Length Decoding decompression function
 	filePtr2.open(fileName);
 	filePtr2 << original;
 	filePtr2.close();
-	
-	cout << "File Decompression Complete!\n\n";
+
+	cout << "[File Decompression Complete!]\n\n";
+	cout << "Text file data after decompression:\n\n" << original << "\n\n";
 	cout << "Press ENTER to return to Main Menu...";
 	cin.get();
 }
@@ -113,11 +127,15 @@ int main() {
 	while(true) {
 		system("cls");
 
+        cout << "-----------------------------------------------------------\n\n";
 		cout << "Run Length Encoding (Lossless Data Compression Algorithm)\n\n";
-		cout << "(1) Compress a file (Run Length Encoding)" << '\n';
-		cout << "(2) Decompress a file (Run Length Decoding)" << '\n';
-		cout << "(3) Exit\n\n";
-		cout << "Enter: ";
+		cout << "-----------------------------------------------------------\n\n";
+		cout << "***ENTER THE NUMBER OF THE OPERATION YOU WANT TO USE ***\n\n";
+
+		cout << "Press 1  to Compress a file (Run Length Encoding)" << '\n';
+		cout << "Press 2  to Decompress a file (Run Length Decoding)" << '\n';
+		cout << "Press 3  to Exit\n\n";
+		cout << "Enter number: ";
 		cin >> select;
 		cin.ignore(numeric_limits<streamsize>::max(),'\n');
 
