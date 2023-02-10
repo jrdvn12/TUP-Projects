@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Filipino SMS Spam Detection System</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Filipino SMS <br> Spam Detection System</h1>
+        </div>
+
+        <form action="{{url_for('predict')}}" method="POST">
+            <textarea class="text_input" name="sms" cols="30" rows="10" placeholder="Input your SMS.." required="required"></textarea>
+            <br>
+            <button type="submit">Predict</button>
+        </form>
+
+        <br>
+
+        <div class="previous">
+            <p class="spam">{{spam_sms}}</p>
+            <p class="ham">{{ham_sms}}</p>
+            <label for="prev_input">Previous Message:</label>
+            <textarea class="prev_input" name="prev_input" cols="30" rows="10" readonly>{{prev_input}}</textarea>
+        </div>
+
+        <div class="footer">
+            <p>Developed by: Jared Ivan Bruno, Jerard Baria, Cyrille Jaye Hilario, and Andrei Niko Perez</p>
+            <p>Technological University of the Philippines - Manila</p>
+            <p>Copyright &copy; 2023 All Rights Reserved.</p>
+        </div>
+    
+    </body>
+    
+</html>
